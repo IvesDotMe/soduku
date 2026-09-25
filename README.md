@@ -20,7 +20,7 @@ URL in Safari, play once so the cache fills, Share → Add to Home Screen.
 
 ## Themes
 
-Shared with Spider: Classic, Walnut, Walnut Deco, Aurora, Felt, Éditorial, Éditorial noir, iPS.
+Shared with Spider: Classic, Walnut, Walnut Deco, Aurora, Glass (follows system light/dark), Felt, Éditorial, Éditorial noir, iPS.
 
 ## Game notes
 
