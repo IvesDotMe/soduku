@@ -1,0 +1,1047 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="description" content="Sudoku — Flash to Expert, every puzzle unique. Works offline.">
+<meta name="theme-color" content="#1f9f87">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sudoku">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<title>Sudoku</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Nunito+Sans:wght@400;600;700&family=Playfair+Display:wght@500;700&family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@400;500;600;700&family=Alfa+Slab+One&family=Arvo:wght@400;700&family=Oswald:wght@600;700&display=swap">
+<style>
+  :root {
+    --felt: #1a4536;
+    --felt-deep: #10312a;
+    --felt-line: rgba(255, 255, 255, 0.10);
+    --felt-ink: #e9efe7;
+    --felt-ink-dim: rgba(233, 239, 231, 0.62);
+    --card: #f8f3e7;
+    --card-edge: #cfc5ad;
+    --card-shadow: rgba(0, 0, 0, 0.35);
+    --back: #7c2d2d;
+    --back-2: #5b1f1f;
+    --back-line: rgba(255, 233, 200, 0.28);
+    --red: #b3322e;
+    --black: #22262b;
+    --brass: #d8a94a;
+    --brass-soft: rgba(216, 169, 74, 0.35);
+    --mint: #7fd8c6;
+    --mint-soft: rgba(127, 216, 198, 0.30);
+    --ui-font: "Nunito Sans", "Segoe UI", system-ui, sans-serif;
+    --display-font: "Fraunces", "Iowan Old Style", Georgia, serif;
+    --brass-hover: #e6b85a;
+    --on-brass: #2a1e08;
+    --red-soft: #e0605c;
+    --back-edge: #3f1515;
+    --body-bg: radial-gradient(120% 90% at 50% 0%, var(--felt) 0%, var(--felt-deep) 100%);
+    --btn-bg: rgba(255, 255, 255, 0.06);
+    --btn-bg-hover: rgba(255, 255, 255, 0.12);
+    --scrim: rgba(8, 24, 19, 0.72);
+    --toast-bg: rgba(12, 30, 25, 0.92);
+    --toast-ink: #e9efe7;
+    --panel-bg: var(--felt-deep);
+    --r-card: calc(var(--cw) * 0.08);
+    --r-btn: 6px;
+    --r-panel: 12px;
+    --ui-size: 14px;
+    --rank-font: var(--display-font);
+    --cw: 72px;
+    --ch: calc(var(--cw) * 1.42);
+    --gap: 10px;
+    --gutter: 16px;
+    color-scheme: dark;
+  }
+  /* ---------- Éditorial (paper): L'IMPACT magazine tokens ---------- */
+  :root[data-skin="paper"] {
+    --felt: #faf7f1;
+    --felt-deep: #f4efe6;
+    --felt-line: #e3dccb;
+    --felt-ink: #211d17;
+    --felt-ink-dim: #6f675a;
+    --card: #fffdf8;
+    --card-edge: #d9d0bc;
+    --card-shadow: rgba(60, 50, 30, 0.18);
+    --back: #f1e9d8;
+    --back-2: #e4dac5;
+    --back-line: rgba(138, 109, 63, 0.38);
+    --back-edge: #b89a67;
+    --red: #8f2f2a;
+    --black: #211d17;
+    --brass: #8a6d3f;
+    --brass-hover: #6e572f;
+    --brass-soft: rgba(138, 109, 63, 0.22);
+    --on-brass: #fffdf8;
+    --red-soft: #8f2f2a;
+    --mint: #4f7a6f;
+    --mint-soft: rgba(79, 122, 111, 0.22);
+    --ui-font: "Cormorant Garamond", Garamond, Georgia, serif;
+    --display-font: "Playfair Display", Didot, "Bodoni MT", Georgia, serif;
+    --body-bg: var(--felt);
+    --btn-bg: transparent;
+    --btn-bg-hover: var(--brass-soft);
+    --scrim: rgba(33, 29, 23, 0.55);
+    --toast-bg: #211d17;
+    --toast-ink: #faf7f1;
+    --panel-bg: #fffdf8;
+    --r-card: 0px;
+    --r-btn: 0px;
+    --r-panel: 0px;
+    --ui-size: 15px;
+    color-scheme: light;
+  }
+  /* ---------- Éditorial noir ---------- */
+  :root[data-skin="noir"] {
+    --felt: #1f1b15;
+    --felt-deep: #100e0b;
+    --felt-line: #332c20;
+    --felt-ink: #ece4d4;
+    --felt-ink-dim: #a3987f;
+    --card: #1c1812;
+    --card-edge: #3d3427;
+    --card-shadow: rgba(0, 0, 0, 0.6);
+    --back: #26211a;
+    --back-2: #1a1611;
+    --back-line: rgba(201, 163, 94, 0.32);
+    --back-edge: #4a3f2c;
+    --red: #d9927c;
+    --black: #ece4d4;
+    --brass: #c9a35e;
+    --brass-hover: #ddb977;
+    --brass-soft: rgba(201, 163, 94, 0.25);
+    --on-brass: #161310;
+    --red-soft: #d9927c;
+    --mint: #ece4d4;
+    --mint-soft: rgba(236, 228, 212, 0.22);
+    --ui-font: "Cormorant Garamond", Garamond, Georgia, serif;
+    --display-font: "Playfair Display", Didot, "Bodoni MT", Georgia, serif;
+    --body-bg: radial-gradient(120% 90% at 50% 0%, var(--felt) 0%, var(--felt-deep) 100%);
+    --btn-bg: transparent;
+    --btn-bg-hover: var(--brass-soft);
+    --scrim: rgba(0, 0, 0, 0.7);
+    --toast-bg: #1c1812;
+    --toast-ink: #ece4d4;
+    --panel-bg: #161310;
+    --r-card: 0px;
+    --r-btn: 0px;
+    --r-panel: 0px;
+    --ui-size: 15px;
+  }
+  /* ---------- iPS: zinc chrome, #0072c6 accent ---------- */
+  :root[data-skin="ips"] {
+    --felt: #27272a;
+    --felt-deep: #18181b;
+    --felt-line: #3f3f46;
+    --felt-ink: #fafafa;
+    --felt-ink-dim: #a1a1aa;
+    --card: #fafafa;
+    --card-edge: #d4d4d8;
+    --card-shadow: rgba(0, 0, 0, 0.5);
+    --back: #0072c6;
+    --back-2: #00589a;
+    --back-line: rgba(255, 255, 255, 0.22);
+    --back-edge: #004f8a;
+    --red: #dc2626;
+    --black: #18181b;
+    --brass: #0072c6;
+    --brass-hover: #1a86d9;
+    --brass-soft: rgba(0, 114, 198, 0.35);
+    --on-brass: #ffffff;
+    --red-soft: #f87171;
+    --mint: #3a97e8;
+    --mint-soft: rgba(58, 151, 232, 0.28);
+    --ui-font: "Poppins", -apple-system, "Segoe UI", Roboto, sans-serif;
+    --display-font: "Poppins", -apple-system, "Segoe UI", Roboto, sans-serif;
+    --body-bg: var(--felt-deep);
+    --btn-bg: #27272a;
+    --btn-bg-hover: #3f3f46;
+    --scrim: rgba(0, 0, 0, 0.6);
+    --toast-bg: #27272a;
+    --toast-ink: #fafafa;
+    --panel-bg: #27272a;
+    --r-card: calc(var(--cw) * 0.08);
+    --r-btn: 6px;
+    --r-panel: 12px;
+    --ui-size: 14px;
+  }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--body-bg);
+    color: var(--felt-ink);
+    font-family: var(--ui-font);
+    font-size: var(--ui-size);
+    transition: background 300ms ease, color 300ms ease;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+    overscroll-behavior: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: none;
+  }
+  #root { height: 100%; }
+  .app {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-block: max(10px, env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-bottom, 0px));
+    padding-inline: max(var(--gutter), env(safe-area-inset-left, 0px)) max(var(--gutter), env(safe-area-inset-right, 0px));
+    box-sizing: border-box;
+    gap: 10px;
+  }
+
+  /* ---------- top bar ---------- */
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    min-width: 0;
+  }
+  .brand h1 {
+    margin: 0;
+    font-family: var(--display-font);
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 0.01em;
+    font-variation-settings: "opsz" 144;
+    color: var(--felt-ink);
+  }
+  .brand .diff {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--brass);
+    font-weight: 700;
+  }
+  .stats {
+    display: flex;
+    gap: 16px;
+    font-variant-numeric: tabular-nums;
+    color: var(--felt-ink-dim);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .stats b { color: var(--felt-ink); font-weight: 700; margin-left: 5px; letter-spacing: 0; font-size: 13px; }
+  .controls { display: flex; gap: 6px; flex-wrap: wrap; }
+  .btn {
+    appearance: none;
+    border: 1px solid var(--felt-line);
+    background: var(--btn-bg);
+    color: var(--felt-ink);
+    font: 600 13px var(--ui-font);
+    padding: 7px 12px;
+    border-radius: var(--r-btn);
+    cursor: pointer;
+    transition: background 120ms ease, border-color 120ms ease;
+  }
+  .btn:hover { background: var(--btn-bg-hover); }
+  .btn:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+  .btn:disabled { opacity: 0.4; cursor: default; }
+  .btn.primary { background: var(--brass); border-color: var(--brass); color: var(--on-brass); }
+  .btn.primary:hover { background: var(--brass-hover); border-color: var(--brass-hover); }
+
+  /* ---------- toast ---------- */
+  .toast {
+    position: fixed;
+    left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    transform: translateX(-50%);
+    background: var(--toast-bg);
+    border: 1px solid var(--felt-line);
+    color: var(--toast-ink);
+    padding: 9px 14px;
+    border-radius: var(--r-btn);
+    font-size: 13px;
+    z-index: 60;
+    animation: toastin 200ms ease;
+    max-width: calc(100vw - 32px);
+    text-align: center;
+  }
+  @keyframes toastin { from { opacity: 0; transform: translate(-50%, 6px); } }
+  /* ---------- overlays ---------- */
+  .overlay {
+    position: fixed; inset: 0;
+    background: var(--scrim);
+    display: flex; align-items: flex-start; justify-content: center;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    z-index: 70;
+    padding: max(16px, env(safe-area-inset-top, 0px)) 16px max(16px, env(safe-area-inset-bottom, 0px));
+    box-sizing: border-box;
+  }
+  .panel {
+    background: var(--panel-bg);
+    border: 1px solid var(--felt-line);
+    border-radius: var(--r-panel);
+    padding: 28px 28px 24px;
+    width: min(440px, 100%);
+    box-sizing: border-box;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+    text-align: center;
+    margin: auto;
+  }
+  .panel h2 {
+    margin: 0 0 6px;
+    font-family: var(--display-font);
+    font-weight: 700;
+    font-size: 30px;
+    text-wrap: balance;
+    font-variation-settings: "opsz" 144;
+  }
+  .panel p { margin: 0 0 20px; color: var(--felt-ink-dim); line-height: 1.5; }
+  .panel .eyebrow {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--brass); font-weight: 700; margin-bottom: 8px;
+  }
+  .choices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
+  .choice {
+    appearance: none;
+    background: var(--btn-bg);
+    border: 1px solid var(--felt-line);
+    color: var(--felt-ink);
+    border-radius: var(--r-panel);
+    padding: 14px 8px 12px;
+    cursor: pointer;
+    font-family: var(--ui-font);
+    transition: background 120ms ease, border-color 120ms ease;
+  }
+  .choice:hover { background: var(--btn-bg-hover); border-color: var(--brass); }
+  .choice:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+  .choice .suits { font-size: 24px; line-height: 1; margin-bottom: 8px; letter-spacing: 2px; }
+  .choice .suits .r { color: var(--red-soft); }
+  .choice .name { font-weight: 700; font-size: 14px; }
+  .choice .sub { font-size: 11px; color: var(--felt-ink-dim); margin-top: 2px; }
+  .panel .row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .panel .win-stats {
+    display: flex; justify-content: center; gap: 24px; margin: 8px 0 20px;
+    font-variant-numeric: tabular-nums;
+  }
+  .panel .win-stats div { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--felt-ink-dim); }
+  .panel .win-stats b { display: block; font-size: 22px; color: var(--felt-ink); letter-spacing: 0; font-family: var(--display-font); }
+  .fine { font-size: 12px; color: var(--felt-ink-dim); margin-top: 16px; line-height: 1.5; }
+  .win-note { font-size: 13px; margin-top: -8px; }
+  .win-stats .best b { color: var(--brass); }
+  .win-stats .best::after { content: "best"; display: block; font-size: 9px; letter-spacing: 0.16em; color: var(--brass); margin-top: 2px; }
+  .stats-block { margin-top: 18px; border-top: 1px solid var(--felt-line); padding-top: 14px; text-align: left; }
+  .stats-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .stats-head .eyebrow { margin: 0; }
+  .streak { font-size: 11px; color: var(--felt-ink-dim); letter-spacing: 0.06em; text-transform: uppercase; }
+  .stats-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-variant-numeric: tabular-nums; font-size: 13px; }
+  .stats-table th { padding-left: 10px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--felt-ink-dim); font-weight: 600; text-align: right; padding: 0 0 6px; }
+  .stats-table td { text-align: right; padding: 5px 0 5px 10px; border-top: 1px solid var(--felt-line); color: var(--felt-ink); white-space: nowrap; }
+  .stats-table th:first-child, .stats-table td.lbl { text-align: left; }
+  .stats-table .rate { color: var(--felt-ink-dim); font-size: 11px; }
+  .linkish { appearance: none; background: none; border: 0; padding: 8px 0 0; color: var(--felt-ink-dim); font: 600 11px var(--ui-font); letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; }
+  .linkish:hover { color: var(--brass); }
+  .linkish:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+
+  /* ---------- Classic: bright teal cloth, chunky ranks, red lace backs ---------- */
+  :root[data-skin="classic"] {
+    --felt: #1f9f87;
+    --felt-deep: #178b75;
+    --felt-line: rgba(255, 255, 255, 0.45);
+    --felt-ink: #ffffff;
+    --felt-ink-dim: rgba(255, 255, 255, 0.82);
+    --card: #fbfaf5;
+    --card-edge: #cfcbbf;
+    --card-shadow: rgba(0, 40, 30, 0.35);
+    --back: #d93a2d;
+    --back-2: #b7291f;
+    --back-line: rgba(255, 236, 224, 0.55);
+    --back-edge: #8f1f16;
+    --red: #d8262b;
+    --black: #1b1b1b;
+    --brass: #f6c744;
+    --brass-hover: #ffd866;
+    --brass-soft: rgba(246, 199, 68, 0.4);
+    --on-brass: #3a2a00;
+    --red-soft: #ff8a80;
+    --mint: #ffffff;
+    --mint-soft: rgba(255, 255, 255, 0.35);
+    --ui-font: "Arvo", "Rockwell", "Roboto Slab", Georgia, serif;
+    --display-font: "Alfa Slab One", "Rockwell Extra Bold", "Arvo", Georgia, serif;
+    --rank-font: "Oswald", "Arial Narrow", "Roboto Condensed", Impact, sans-serif;
+    --body-bg:
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.045) 0 2px, transparent 2px 6px),
+      repeating-linear-gradient(-45deg, rgba(0,0,0,0.04) 0 2px, transparent 2px 6px),
+      radial-gradient(120% 90% at 50% 0%, var(--felt) 0%, var(--felt-deep) 100%);
+    --btn-bg: transparent;
+    --btn-bg-hover: rgba(255, 255, 255, 0.14);
+    --scrim: rgba(10, 70, 58, 0.72);
+    --toast-bg: #10665a;
+    --toast-ink: #ffffff;
+    --panel-bg: #178b75;
+    --r-card: calc(var(--cw) * 0.07);
+    --r-btn: 6px;
+    --r-panel: 14px;
+    --ui-size: 14px;
+  }
+  :root[data-skin="classic"] .btn { border-color: transparent; font-family: var(--display-font); font-weight: 400; font-size: 15px; letter-spacing: 0.01em; text-shadow: 0 1px 0 rgba(0,0,0,0.25); }
+  :root[data-skin="classic"] .btn.primary { text-shadow: none; }
+  :root[data-skin="classic"] .brand h1 { font-weight: 400; font-size: 24px; text-shadow: 0 1px 0 rgba(0,0,0,0.25); }
+  :root[data-skin="classic"] .brand .diff, :root[data-skin="classic"] .eyebrow { color: var(--brass); }
+  :root[data-skin="classic"] .stats { font-family: var(--display-font); font-size: 12px; letter-spacing: 0.04em; text-transform: lowercase; }
+  :root[data-skin="classic"] .stats b { color: var(--brass); font-size: 15px; }
+  :root[data-skin="classic"] .skin select { border-color: transparent; font-family: var(--display-font); font-weight: 400; font-size: 14px; }
+  :root[data-skin="classic"] .panel h2 { font-weight: 400; }
+  :root[data-skin="classic"] .choice { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.3); }
+  :root[data-skin="classic"] .choice .name { font-family: var(--display-font); font-weight: 400; }
+  :root[data-skin="classic"] .stats-table td, :root[data-skin="classic"] .stats-table th { border-color: rgba(255,255,255,0.3); }
+  /* Éditorial: hairline rules and tracked serif UI */
+  :root[data-skin="paper"] .stats, :root[data-skin="noir"] .stats,
+  :root[data-skin="paper"] .btn, :root[data-skin="noir"] .btn,
+  :root[data-skin="paper"] .skin select, :root[data-skin="noir"] .skin select { font-family: "Poppins", var(--ui-font); font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 500; }
+  :root[data-skin="paper"] .brand h1, :root[data-skin="noir"] .brand h1 { font-weight: 500; font-style: italic; letter-spacing: 0; }
+  :root[data-skin="paper"] .panel h2, :root[data-skin="noir"] .panel h2 { font-weight: 500; }
+  :root[data-skin="paper"] .panel p, :root[data-skin="noir"] .panel p { font-size: 17px; }
+  /* iPS: geometric ranks, dot-style stats */
+  :root[data-skin="ips"] .brand h1 { font-weight: 600; letter-spacing: -0.01em; }
+  :root[data-skin="ips"] .stats span::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--brass); margin-right: 7px; vertical-align: 1px; }
+  /* ---------- theme picker ---------- */
+  .skin { display: flex; align-items: center; gap: 6px; }
+  .skin-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--felt-ink-dim); font-weight: 600; }
+  .skin select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: var(--btn-bg);
+    color: var(--felt-ink);
+    border: 1px solid var(--felt-line);
+    border-radius: var(--r-btn);
+    font: 600 13px var(--ui-font);
+    padding: 7px 26px 7px 10px;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23999' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 9px center;
+  }
+  .skin select:hover { background-color: var(--btn-bg-hover); }
+  .skin select:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+  .menu-skin { margin-top: 14px; display: flex; justify-content: center; }
+
+  /* ---------- board ---------- */
+  .stage { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 12px; }
+  .board {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 3px;
+    background: var(--grid-ink);
+    border: 3px solid var(--grid-ink);
+    border-radius: var(--r-btn);
+    box-shadow: 0 6px 20px var(--card-shadow);
+    touch-action: manipulation;
+  }
+  .box { display: grid; grid-template-columns: repeat(3, var(--cell)); grid-template-rows: repeat(3, var(--cell)); gap: 1px; background: var(--grid-ink); }
+  .cell {
+    background: var(--card);
+    color: var(--black);
+    display: grid;
+    place-items: center;
+    position: relative;
+    font-family: var(--rank-font);
+    font-weight: 700;
+    font-size: calc(var(--cell) * 0.58);
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
+    transition: background 90ms ease;
+  }
+  .cell.given { color: var(--black); }
+  .cell.entered { color: var(--entered); }
+  .cell.wrong { color: var(--red); background: var(--wrong-bg); }
+  .cell.peer { background: var(--peer-bg); }
+  .cell.same { background: var(--same-bg); }
+  .cell.selected { background: var(--sel-bg); }
+  .cell.selected.wrong { background: var(--wrong-bg); }
+  .cell.hinted { animation: hintpop 500ms ease; }
+  @keyframes hintpop { 0% { transform: scale(0.6); } 60% { transform: scale(1.15); } 100% { transform: scale(1); } }
+  .cell .notes {
+    position: absolute; inset: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    padding: 2px;
+    box-sizing: border-box;
+  }
+  .cell .notes span { font-family: var(--ui-font); font-weight: 600; font-size: calc(var(--cell) * 0.24); color: var(--felt-ink-dim); display: grid; place-items: center; line-height: 1; }
+  .cell.up .notes span { color: var(--note-ink); }
+  .cell .notes span.hl { color: var(--entered); font-weight: 700; }
+  .cell.solved { animation: solvedpop 600ms ease both; }
+  @keyframes solvedpop { 0% { transform: scale(1); } 40% { transform: scale(1.12); background: var(--brass-soft); } 100% { transform: scale(1); } }
+  /* ---------- number pad ---------- */
+  .pad { display: grid; grid-template-columns: repeat(9, var(--cell)); gap: 6px; }
+  .key {
+    appearance: none;
+    border: 1px solid var(--felt-line);
+    background: var(--btn-bg);
+    color: var(--felt-ink);
+    border-radius: var(--r-btn);
+    height: calc(var(--cell) * 1.15);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-family: var(--rank-font);
+    font-weight: 700;
+    font-size: calc(var(--cell) * 0.55);
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    transition: background 90ms ease;
+  }
+  .key:hover { background: var(--btn-bg-hover); }
+  .key:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+  .key small { font-family: var(--ui-font); font-size: 10px; font-weight: 600; color: var(--felt-ink-dim); margin-top: 3px; letter-spacing: 0; }
+  .key.done { opacity: 0.28; cursor: default; }
+  .key.active { background: var(--brass); color: var(--on-brass); border-color: var(--brass); }
+  .key.active small { color: var(--on-brass); }
+  /* ---------- tools ---------- */
+  .tools { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .tool {
+    appearance: none;
+    border: 1px solid var(--felt-line);
+    background: var(--btn-bg);
+    color: var(--felt-ink);
+    border-radius: var(--r-btn);
+    padding: 9px 14px;
+    min-width: 84px;
+    font: 600 13px var(--ui-font);
+    cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    position: relative;
+  }
+  .tool:hover { background: var(--btn-bg-hover); }
+  .tool:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+  .tool:disabled { opacity: 0.4; cursor: default; }
+  .tool.on { background: var(--brass); color: var(--on-brass); border-color: var(--brass); }
+  .tool .badge { position: absolute; top: -7px; right: -6px; background: var(--brass); color: var(--on-brass); font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 999px; letter-spacing: 0.04em; }
+  .tool.on .badge { background: var(--felt-ink); color: var(--felt); }
+  .tool .glyph { font-size: 18px; line-height: 1; font-family: var(--display-font); font-weight: 700; }
+  .tool span { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .mistakes b.bad { color: var(--red-soft); }
+  /* per-theme cell colours */
+  :root { --cell: 48px; --grid-ink: #22262b; --entered: #1f5fa8; --note-ink: #4a5560; --peer-bg: #ece9df; --same-bg: #dfe8f3; --sel-bg: #c9dcf2; --wrong-bg: #f7d9d7; }
+  :root[data-skin="paper"] { --grid-ink: #211d17; --entered: #8a6d3f; --note-ink: #7a7160; --peer-bg: #f1ece1; --same-bg: #ece3d0; --sel-bg: #e3d6b8; --wrong-bg: #f0d6d0; }
+  :root[data-skin="noir"] { --grid-ink: #5a4c34; --entered: #c9a35e; --note-ink: #a3987f; --peer-bg: #241f18; --same-bg: #2f2819; --sel-bg: #3d3320; --wrong-bg: #3a1f1b; --black: #ece4d4; }
+  :root[data-skin="ips"] { --grid-ink: #18181b; --entered: #0072c6; --note-ink: #52525b; --peer-bg: #eaeaec; --same-bg: #dbe9f6; --sel-bg: #bfdcf5; --wrong-bg: #f8d7d7; }
+  :root[data-skin="classic"] { --grid-ink: #1b1b1b; --entered: #1b7ac2; --note-ink: #55606a; --peer-bg: #ecefe9; --same-bg: #d7ecf5; --sel-bg: #ffe9a3; --wrong-bg: #f9d3d0; }
+  :root[data-skin="classic"] .key, :root[data-skin="classic"] .tool { background: rgba(255,255,255,0.14); border-color: transparent; }
+  :root[data-skin="classic"] .tool span { font-family: var(--display-font); font-weight: 400; text-transform: lowercase; letter-spacing: 0.02em; font-size: 13px; }
+  .choice .lvl { font-size: 22px; line-height: 1; margin-bottom: 8px; font-family: var(--rank-font); font-weight: 700; color: var(--brass); }
+  .choices.five { grid-template-columns: repeat(5, 1fr); }
+  .dock { display: none; }
+  @media (max-width: 620px) {
+    .brand h1 { font-size: 18px; }
+    .btn { padding: 6px 9px; font-size: 12px; }
+    .skin-label { display: none; }
+    :root { --gutter: 6px; }
+    .app { gap: 6px; }
+    .bar { gap: 6px 10px; }
+    .bar .stats { display: none; }
+    .stage { gap: 10px; }
+    .pad { gap: 4px; }
+    .key { height: calc(var(--cell) * 1.25); }
+    .tools { gap: 6px; }
+    .tool { min-width: 0; flex: 1; padding: 9px 4px; }
+    .dock { display: flex; align-items: center; justify-content: space-between; padding: 2px 4px 0; }
+    .dock-mid { display: flex; align-items: baseline; gap: 14px; font-variant-numeric: tabular-nums; }
+    .dock-mid b { font-family: var(--display-font); font-size: 20px; color: var(--brass); font-weight: 700; }
+    .dock-mid span { font-size: 12px; color: var(--felt-ink-dim); letter-spacing: 0.06em; }
+    :root[data-skin="classic"] .dock-mid b { font-weight: 400; }
+    .choices.five { grid-template-columns: repeat(5, 1fr); gap: 4px; }
+    .choice { padding: 10px 2px 8px; }
+    .choice .lvl { font-size: 18px; }
+    .choice .name { font-size: 11px; }
+    .choice .sub { display: none; }
+    .panel { padding: 22px 14px 18px; }
+    .panel h2 { font-size: 26px; }
+    .panel p { font-size: 13px; }
+    .stats-table { font-size: 12px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cell, .btn, .choice, .key { transition: none; animation: none; }
+    .toast { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script src="vendor/react.production.min.js"></script>
+<script src="vendor/react-dom.production.min.js"></script>
+<script>
+(function () {
+  const { useState, useEffect, useRef, useMemo, useCallback } = React;
+  const h = React.createElement;
+
+  const SAVE_KEY = 'sudoku-save-v1';
+  const SKIN_KEY = 'spider-solitaire-skin';   // shared with Spider so both games wear the same theme
+  const STATS_KEY = 'sudoku-stats-v1';
+  const SKINS = { classic: 'Classic', felt: 'Felt', paper: 'Éditorial', noir: 'Éditorial noir', ips: 'iPS' };
+
+  // Difficulty = how many givens stay on the board (fewer givens → harder). All puzzles have one solution.
+  const LEVELS = {
+    flash:  { name: 'Flash',  sub: 'A quick one', givens: 52, mult: 1 },
+    easy:   { name: 'Easy',   sub: 'Warm up',      givens: 42, mult: 2 },
+    medium: { name: 'Medium', sub: 'Think a bit',  givens: 34, mult: 3 },
+    hard:   { name: 'Hard',   sub: 'Pencil marks', givens: 28, mult: 5 },
+    expert: { name: 'Expert', sub: 'No mercy',     givens: 24, mult: 8 },
+  };
+  const LEVEL_KEYS = Object.keys(LEVELS);
+
+  // ---------------------------------------------------------------- random
+  function randInt(n) {
+    if (window.crypto && window.crypto.getRandomValues) {
+      const buf = new Uint32Array(1);
+      const limit = Math.floor(0x100000000 / n) * n;
+      let x;
+      do { window.crypto.getRandomValues(buf); x = buf[0]; } while (x >= limit);
+      return x % n;
+    }
+    return Math.floor(Math.random() * n);
+  }
+  function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = randInt(i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+  // ---------------------------------------------------------------- sudoku core
+  const ROW = i => Math.floor(i / 9), COL = i => i % 9, BOX = i => Math.floor(ROW(i) / 3) * 3 + Math.floor(COL(i) / 3);
+  const PEERS = Array.from({ length: 81 }, (_, i) => {
+    const s = new Set();
+    for (let k = 0; k < 81; k++) if (k !== i && (ROW(k) === ROW(i) || COL(k) === COL(i) || BOX(k) === BOX(i))) s.add(k);
+    return [...s];
+  });
+
+  function candidates(g, i) {
+    const used = new Set();
+    for (const p of PEERS[i]) if (g[p]) used.add(g[p]);
+    const out = [];
+    for (let d = 1; d <= 9; d++) if (!used.has(d)) out.push(d);
+    return out;
+  }
+
+  // Count solutions up to `limit` (2 is enough to prove uniqueness). Picks the most constrained cell first.
+  function countSolutions(g, limit) {
+    let best = -1, bestC = null;
+    for (let i = 0; i < 81; i++) {
+      if (g[i]) continue;
+      const c = candidates(g, i);
+      if (c.length === 0) return 0;
+      if (bestC === null || c.length < bestC.length) { best = i; bestC = c; if (c.length === 1) break; }
+    }
+    if (best === -1) return 1;
+    let n = 0;
+    for (const d of bestC) {
+      g[best] = d;
+      n += countSolutions(g, limit - n);
+      g[best] = 0;
+      if (n >= limit) break;
+    }
+    return n;
+  }
+
+  function fillGrid(g) {
+    let best = -1, bestC = null;
+    for (let i = 0; i < 81; i++) {
+      if (g[i]) continue;
+      const c = candidates(g, i);
+      if (c.length === 0) return false;
+      if (bestC === null || c.length < bestC.length) { best = i; bestC = c; }
+    }
+    if (best === -1) return true;
+    for (const d of shuffle(bestC)) {
+      g[best] = d;
+      if (fillGrid(g)) return true;
+    }
+    g[best] = 0;
+    return false;
+  }
+
+  // Remove givens one by one (random order), keeping only removals that leave a unique solution.
+  function makePuzzle(level) {
+    const target = LEVELS[level].givens;
+    const solution = new Array(81).fill(0);
+    fillGrid(solution);
+    const puzzle = solution.slice();
+    const order = shuffle(Array.from({ length: 81 }, (_, i) => i));
+    let givens = 81;
+    for (const i of order) {
+      if (givens <= target) break;
+      const keep = puzzle[i];
+      puzzle[i] = 0;
+      if (countSolutions(puzzle.slice(), 2) === 1) givens--;
+      else puzzle[i] = keep;
+    }
+    return { puzzle, solution };
+  }
+
+  function newGame(level) {
+    const { puzzle, solution } = makePuzzle(level);
+    return {
+      level, puzzle, solution,
+      cells: puzzle.slice(),                           // current values (0 = empty)
+      notes: Array.from({ length: 81 }, () => []),     // pencil marks per cell
+      elapsed: 0, started: false, won: false,
+      mistakes: 0, hints: 0, score: 0,
+    };
+  }
+
+  const isComplete = (g) => g.cells.every((v, i) => v === g.solution[i]);
+
+  // ---------------------------------------------------------------- persistence
+  function load() { try { const s = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null'); return s && s.game && s.game.cells ? s : null; } catch (e) { return null; } }
+  function save(s) { try { localStorage.setItem(SAVE_KEY, JSON.stringify(s)); } catch (e) {} }
+  const emptyStats = () => ({ streak: 0, bestStreak: 0, by: Object.fromEntries(LEVEL_KEYS.map(k => [k, { played: 0, won: 0 }])) });
+  function loadStats() {
+    try { const s = JSON.parse(localStorage.getItem(STATS_KEY) || 'null'); if (!s || !s.by) return emptyStats(); const b = emptyStats(); return { ...b, ...s, by: { ...b.by, ...s.by } }; } catch (e) { return emptyStats(); }
+  }
+  function saveStats(st) { try { localStorage.setItem(STATS_KEY, JSON.stringify(st)); } catch (e) {} }
+  function recordWin(st, g) {
+    const d = { ...st.by[g.level] };
+    d.played += 1; d.won += 1;
+    const records = [];
+    if (d.bestScore == null || g.score > d.bestScore) { d.bestScore = g.score; records.push('score'); }
+    if (d.bestTime == null || g.elapsed < d.bestTime) { d.bestTime = g.elapsed; records.push('time'); }
+    const streak = st.streak + 1;
+    return { stats: { ...st, streak, bestStreak: Math.max(st.bestStreak, streak), by: { ...st.by, [g.level]: d } }, records };
+  }
+  function recordAbandon(st, g) {
+    const d = { ...st.by[g.level], played: st.by[g.level].played + 1 };
+    return { ...st, streak: 0, by: { ...st.by, [g.level]: d } };
+  }
+  const totalPlayed = st => Object.values(st.by).reduce((n, d) => n + d.played, 0);
+  const fmtTime = s => `${Math.floor(s / 60)}:${s % 60 < 10 ? '0' : ''}${s % 60}`;
+  const fmtNum = n => n.toLocaleString('en-CA');
+
+  // Score: every correct digit earns points that decay with time; mistakes and hints cost.
+  function placementPoints(g) {
+    const m = LEVELS[g.level].mult;
+    const decay = Math.max(0.25, 1 - g.elapsed / (20 * 60));
+    return Math.round(120 * m * decay);
+  }
+
+  // ---------------------------------------------------------------- components
+  function SkinPicker({ skin, onChange, id }) {
+    return h('label', { className: 'skin' },
+      h('span', { className: 'skin-label' }, 'Theme'),
+      h('select', { id: id || 'skin', value: skin, onChange: e => onChange(e.target.value), 'aria-label': 'Theme' },
+        Object.keys(SKINS).map(k => h('option', { key: k, value: k }, SKINS[k]))),
+    );
+  }
+
+  function StatsTable({ stats, onReset }) {
+    const [confirm, setConfirm] = useState(false);
+    if (!totalPlayed(stats)) return null;
+    return h('div', { className: 'stats-block' },
+      h('div', { className: 'stats-head' },
+        h('span', { className: 'eyebrow' }, 'Your record'),
+        h('span', { className: 'streak' }, stats.streak > 0 ? `${stats.streak} win streak` : `Best streak ${stats.bestStreak}`)),
+      h('table', { className: 'stats-table' },
+        h('thead', null, h('tr', null, h('th', null, ''), h('th', null, 'Played'), h('th', null, 'Won'), h('th', null, 'Best score'), h('th', null, 'Best time'))),
+        h('tbody', null, LEVEL_KEYS.map(k => {
+          const d = stats.by[k]; if (!d.played) return null;
+          return h('tr', { key: k },
+            h('td', { className: 'lbl' }, LEVELS[k].name), h('td', null, d.played),
+            h('td', null, d.won, h('span', { className: 'rate' }, ` ${Math.round(d.won / d.played * 100)}%`)),
+            h('td', null, d.bestScore != null ? fmtNum(d.bestScore) : '—'),
+            h('td', null, d.bestTime != null ? fmtTime(d.bestTime) : '—'));
+        }))),
+      h('button', { className: 'linkish', id: 'reset-stats', onClick: () => { if (confirm) { onReset(); setConfirm(false); } else setConfirm(true); } },
+        confirm ? 'Tap again to erase your record' : 'Reset record'),
+    );
+  }
+
+  function Menu({ resume, onStart, onResume, skin, onSkin, stats, onResetStats, busy }) {
+    return h('div', { className: 'overlay' },
+      h('div', { className: 'panel' },
+        h('div', { className: 'eyebrow' }, 'Every puzzle has one solution'),
+        h('h2', null, 'Sudoku'),
+        h('p', null, 'Fill the grid so every row, column and 3×3 box holds 1 to 9 once. Tap a cell, then a number; hold the pencil for notes.'),
+        h('div', { className: 'choices five' },
+          LEVEL_KEYS.map((k, i) => h('button', { key: k, className: 'choice', id: 'start-' + k, disabled: busy, onClick: () => onStart(k) },
+            h('div', { className: 'lvl' }, '★'.repeat(i + 1)),
+            h('div', { className: 'name' }, LEVELS[k].name),
+            h('div', { className: 'sub' }, LEVELS[k].sub)))),
+        resume && h('div', { className: 'row' },
+          h('button', { className: 'btn primary', id: 'resume', onClick: onResume },
+            `Resume ${LEVELS[resume.level].name.toLowerCase()} · ${fmtTime(resume.elapsed)}`)),
+        h(StatsTable, { stats, onReset: onResetStats }),
+        h('div', { className: 'fine' }, busy ? 'Building your puzzle…' : 'Wrong digits show in red. Hints fill the selected cell (or the easiest one) and cost points.'),
+        h('div', { className: 'menu-skin' }, h(SkinPicker, { skin, onChange: onSkin, id: 'skin-menu' })),
+      ));
+  }
+
+  function Win({ game, onNew, stats, records }) {
+    return h('div', { className: 'overlay' },
+      h('div', { className: 'panel' },
+        h('div', { className: 'eyebrow' }, LEVELS[game.level].name),
+        h('h2', null, game.mistakes === 0 ? 'Flawless.' : 'Solved.'),
+        h('div', { className: 'win-stats' },
+          h('div', { className: records.includes('score') ? 'best' : '' }, h('b', null, fmtNum(game.score)), 'Score'),
+          h('div', { className: records.includes('time') ? 'best' : '' }, h('b', null, fmtTime(game.elapsed)), 'Time'),
+          h('div', null, h('b', null, game.mistakes), 'Mistakes')),
+        h('p', { className: 'win-note' },
+          records.length ? `New personal best — ${records.join(' and ')}. ` : '',
+          stats.streak > 1 ? `${stats.streak} wins in a row.` : `${stats.by[game.level].won} of ${stats.by[game.level].played} ${LEVELS[game.level].name.toLowerCase()} puzzles won.`),
+        h('div', { className: 'row' },
+          h('button', { className: 'btn primary', onClick: () => onNew(game.level) }, 'Play again'),
+          h('button', { className: 'btn', onClick: () => onNew(null) }, 'Change level')),
+      ));
+  }
+
+  function App({ boot }) {
+    const [game, setGame] = useState(boot.game || null);
+    const [history, setHistory] = useState(boot.history || []);
+    const [screen, setScreen] = useState(boot.game ? 'play' : 'menu');
+    const [sel, setSel] = useState(null);
+    const [notesMode, setNotesMode] = useState(false);
+    const [toast, setToast] = useState(null);
+    const [busy, setBusy] = useState(false);
+    const [hinted, setHinted] = useState(null);
+    const [solvedUnits, setSolvedUnits] = useState([]);   // cells to pop when a row/col/box completes
+    const [cellSize, setCellSize] = useState(48);
+    const [skin, setSkin] = useState(() => { try { const k = localStorage.getItem(SKIN_KEY); return SKINS[k] ? k : 'classic'; } catch (e) { return 'classic'; } });
+    const [stats, setStats] = useState(loadStats);
+    const [records, setRecords] = useState([]);
+    const stageRef = useRef(null);
+    const toastTimer = useRef(null);
+
+    useEffect(() => { document.documentElement.setAttribute('data-skin', skin); try { localStorage.setItem(SKIN_KEY, skin); } catch (e) {} }, [skin]);
+    useEffect(() => { if (game) save({ game, history }); else { try { localStorage.removeItem(SAVE_KEY); } catch (e) {} } }, [game, history]);
+    useEffect(() => saveStats(stats), [stats]);
+    useEffect(() => { if (window.claude && window.claude.hot && window.claude.hot.snapshot) window.claude.hot.snapshot(() => ({ game, history })); }, [game, history]);
+
+    // Timer
+    useEffect(() => {
+      if (!game || !game.started || game.won || screen !== 'play') return;
+      const t = setInterval(() => setGame(g => (g && !g.won ? { ...g, elapsed: g.elapsed + 1 } : g)), 1000);
+      return () => clearInterval(t);
+    }, [game && game.started, game && game.won, screen]);
+
+    // Board size: fit width, and leave room for pad + tools in the height
+    useEffect(() => {
+      const el = stageRef.current; if (!el) return;
+      const measure = () => {
+        const r = el.getBoundingClientRect();
+        const byW = Math.floor((r.width - 18) / 9);   // 6 border + 6 box gaps + 6 cell gaps
+        const byH = Math.floor((r.height - 8 - 24 - 60 - 56) / (9 + 1.25 + 0.15));
+        const c = Math.max(28, Math.min(56, byW, byH));
+        setCellSize(c);
+        document.documentElement.style.setProperty('--cell', c + 'px');
+      };
+      measure();
+      const ro = new ResizeObserver(measure); ro.observe(el);
+      window.addEventListener('resize', measure);
+      return () => { ro.disconnect(); window.removeEventListener('resize', measure); };
+    }, [screen]);
+
+    const say = useCallback(msg => { setToast(msg); clearTimeout(toastTimer.current); toastTimer.current = setTimeout(() => setToast(null), 2000); }, []);
+
+    const start = useCallback((level) => {
+      if (game && !game.won && game.started) setStats(st => recordAbandon(st, game));
+      setBusy(true);
+      // Let the "Building…" state paint before the generator runs (it can take a moment on Expert).
+      setTimeout(() => {
+        const g = newGame(level);
+        setGame(g); setHistory([]); setSel(null); setNotesMode(false); setRecords([]); setBusy(false); setScreen('play');
+      }, 30);
+    }, [game]);
+
+    const push = useCallback((g1) => {
+      setHistory(hs => [...hs.slice(-299), game]);
+      setGame(g1);
+    }, [game]);
+
+    // Any row/column/box that just became complete and correct → pop animation
+    const checkUnits = useCallback((g, i) => {
+      const units = [
+        Array.from({ length: 9 }, (_, k) => ROW(i) * 9 + k),
+        Array.from({ length: 9 }, (_, k) => k * 9 + COL(i)),
+        Array.from({ length: 9 }, (_, k) => (Math.floor(ROW(i) / 3) * 3 + Math.floor(k / 3)) * 9 + Math.floor(COL(i) / 3) * 3 + (k % 3)),
+      ];
+      const done = [];
+      for (const u of units) if (u.every(c => g.cells[c] === g.solution[c])) done.push(...u);
+      if (done.length) { setSolvedUnits(done); setTimeout(() => setSolvedUnits([]), 650); }
+    }, []);
+
+    const enter = useCallback((digit) => {
+      if (!game || game.won || sel == null || game.puzzle[sel]) return;
+      const g = { ...game, cells: game.cells.slice(), notes: game.notes.map(n => n.slice()), started: true };
+      if (notesMode) {
+        if (g.cells[sel]) return;
+        const n = g.notes[sel];
+        const at = n.indexOf(digit);
+        if (at >= 0) n.splice(at, 1); else { n.push(digit); n.sort(); }
+        push(g);
+        return;
+      }
+      if (g.cells[sel] === digit) return;
+      g.cells[sel] = digit;
+      g.notes[sel] = [];
+      if (digit === g.solution[sel]) {
+        g.score += placementPoints(g);
+        for (const p of PEERS[sel]) { const k = g.notes[p].indexOf(digit); if (k >= 0) g.notes[p].splice(k, 1); }
+        if (isComplete(g)) {
+          g.won = true;
+          g.score += Math.max(0, Math.round((30 * 60 - g.elapsed) * LEVELS[g.level].mult * 2));
+          setStats(st => { const r = recordWin(st, g); setRecords(r.records); return r.stats; });
+        } else checkUnits(g, sel);
+      } else {
+        g.mistakes += 1;
+        g.score = Math.max(0, g.score - 100 * LEVELS[g.level].mult);
+      }
+      push(g);
+    }, [game, sel, notesMode, push, checkUnits]);
+
+    const erase = useCallback(() => {
+      if (!game || game.won || sel == null || game.puzzle[sel]) return;
+      if (!game.cells[sel] && !game.notes[sel].length) return;
+      const g = { ...game, cells: game.cells.slice(), notes: game.notes.map(n => n.slice()) };
+      g.cells[sel] = 0; g.notes[sel] = [];
+      push(g);
+    }, [game, sel, push]);
+
+    const undo = useCallback(() => {
+      if (!history.length || !game) return;
+      const prev = history[history.length - 1];
+      setHistory(history.slice(0, -1));
+      setGame({ ...prev, elapsed: game.elapsed, score: Math.min(prev.score, game.score) });
+    }, [history, game]);
+
+    const hint = useCallback(() => {
+      if (!game || game.won) return;
+      let i = sel;
+      if (i == null || game.cells[i] === game.solution[i]) {
+        // pick the empty (or wrong) cell with the fewest candidates
+        let best = -1, bestN = 10;
+        for (let k = 0; k < 81; k++) {
+          if (game.cells[k] === game.solution[k]) continue;
+          const n = candidates(game.cells, k).length;
+          if (n < bestN) { bestN = n; best = k; }
+        }
+        i = best;
+      }
+      if (i < 0) return;
+      const g = { ...game, cells: game.cells.slice(), notes: game.notes.map(n => n.slice()), started: true };
+      g.cells[i] = g.solution[i]; g.notes[i] = [];
+      g.hints += 1;
+      g.score = Math.max(0, g.score - 150 * LEVELS[g.level].mult);
+      for (const p of PEERS[i]) { const k = g.notes[p].indexOf(g.solution[i]); if (k >= 0) g.notes[p].splice(k, 1); }
+      setSel(i); setHinted(i); setTimeout(() => setHinted(null), 600);
+      if (isComplete(g)) { g.won = true; setStats(st => { const r = recordWin(st, g); setRecords(r.records); return r.stats; }); }
+      else checkUnits(g, i);
+      push(g);
+    }, [game, sel, push, checkUnits]);
+
+    // Keyboard
+    useEffect(() => {
+      const onKey = (e) => {
+        if (screen !== 'play' || !game) return;
+        if (e.key >= '1' && e.key <= '9') { enter(+e.key); e.preventDefault(); }
+        else if (e.key === 'Backspace' || e.key === 'Delete' || e.key === '0') { erase(); e.preventDefault(); }
+        else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') { undo(); e.preventDefault(); }
+        else if (e.key === 'n' || e.key === 'N') setNotesMode(m => !m);
+        else if (e.key === 'h' || e.key === 'H') hint();
+        else if (e.key.startsWith('Arrow')) {
+          e.preventDefault();
+          setSel(s => {
+            if (s == null) return 40;
+            const r = ROW(s), c = COL(s);
+            if (e.key === 'ArrowUp') return Math.max(0, r - 1) * 9 + c;
+            if (e.key === 'ArrowDown') return Math.min(8, r + 1) * 9 + c;
+            if (e.key === 'ArrowLeft') return r * 9 + Math.max(0, c - 1);
+            return r * 9 + Math.min(8, c + 1);
+          });
+        }
+      };
+      window.addEventListener('keydown', onKey);
+      return () => window.removeEventListener('keydown', onKey);
+    }, [screen, game, enter, erase, undo, hint]);
+
+    // ------------------------------------------------ render
+    if (screen === 'menu' || !game) {
+      return h(Menu, { resume: game, onStart: start, onResume: () => setScreen('play'), skin, onSkin: setSkin, stats, onResetStats: () => setStats(emptyStats()), busy });
+    }
+
+    const counts = Array(10).fill(0);
+    game.cells.forEach((v, i) => { if (v && v === game.solution[i]) counts[v]++; });
+    const selVal = sel != null ? game.cells[sel] : 0;
+    const selCorrect = sel != null && selVal && selVal === game.solution[sel];
+
+    return h('div', { className: 'app' },
+      h('div', { className: 'bar' },
+        h('div', { className: 'brand' }, h('h1', null, 'Sudoku'), h('span', { className: 'diff' }, LEVELS[game.level].name)),
+        h('div', { className: 'stats' },
+          h('span', null, 'Score', h('b', { id: 'score' }, fmtNum(game.score))),
+          h('span', { className: 'mistakes' }, 'Mistakes', h('b', { id: 'mistakes', className: game.mistakes ? 'bad' : '' }, game.mistakes)),
+          h('span', null, 'Time', h('b', { id: 'time' }, fmtTime(game.elapsed)))),
+        h('div', { className: 'controls' },
+          h(SkinPicker, { skin, onChange: setSkin }),
+          h('button', { className: 'btn', id: 'new', onClick: () => setScreen('menu') }, 'New game'))),
+      h('div', { className: 'stage', ref: stageRef },
+        h('div', { className: 'board', role: 'grid', 'aria-label': 'Sudoku board' },
+          Array.from({ length: 9 }, (_, b) => h('div', { key: b, className: 'box' },
+            Array.from({ length: 9 }, (_, k) => {
+              const i = (Math.floor(b / 3) * 3 + Math.floor(k / 3)) * 9 + (b % 3) * 3 + (k % 3);
+              const v = game.cells[i];
+              const given = !!game.puzzle[i];
+              const wrong = v && v !== game.solution[i];
+              const isSel = sel === i;
+              const inLine = sel != null && !isSel && (ROW(i) === ROW(sel) || COL(i) === COL(sel) || BOX(i) === BOX(sel));
+              const same = selVal && v === selVal && !isSel;
+              const cls = ['cell', given ? 'given' : (v ? 'entered' : 'up'),
+                wrong ? 'wrong' : '', isSel ? 'selected' : (same ? 'same' : (inLine ? 'peer' : '')),
+                hinted === i ? 'hinted' : '', solvedUnits.includes(i) ? 'solved' : ''].join(' ');
+              return h('div', { key: i, className: cls, role: 'gridcell', 'data-i': i, onPointerDown: (e) => { e.preventDefault(); setSel(i); } },
+                v ? String(v) : (game.notes[i].length ? h('div', { className: 'notes' },
+                  Array.from({ length: 9 }, (_, d) => h('span', { key: d, className: selVal === d + 1 && game.notes[i].includes(d + 1) ? 'hl' : '' }, game.notes[i].includes(d + 1) ? d + 1 : ''))) : null));
+            })))),
+        h('div', { className: 'pad' },
+          Array.from({ length: 9 }, (_, d) => {
+            const n = d + 1, left = 9 - counts[n];
+            return h('button', { key: n, className: 'key' + (left === 0 ? ' done' : '') + (selVal === n && selCorrect ? ' active' : ''), id: 'key-' + n, disabled: left === 0, onClick: () => enter(n) },
+              n, h('small', null, left === 0 ? '✓' : left));
+          })),
+        h('div', { className: 'tools' },
+          h('button', { className: 'tool', id: 'undo', onClick: undo, disabled: !history.length }, h('div', { className: 'glyph' }, '↶'), h('span', null, 'Undo')),
+          h('button', { className: 'tool', id: 'erase', onClick: erase }, h('div', { className: 'glyph' }, '⌫'), h('span', null, 'Erase')),
+          h('button', { className: 'tool' + (notesMode ? ' on' : ''), id: 'notes', onClick: () => setNotesMode(m => !m), 'aria-pressed': notesMode }, h('div', { className: 'glyph' }, '✎'), h('span', null, 'Notes'), h('span', { className: 'badge' }, notesMode ? 'on' : 'off')),
+          h('button', { className: 'tool', id: 'hint', onClick: hint }, h('div', { className: 'glyph' }, '?'), h('span', null, 'Hint'), game.hints > 0 && h('span', { className: 'badge' }, game.hints)))),
+      h('div', { className: 'dock' },
+        h('div', { className: 'dock-mid' }, h('b', null, fmtNum(game.score)), h('span', null, `${game.mistakes} ${game.mistakes === 1 ? 'mistake' : 'mistakes'}`)),
+        h('div', { className: 'dock-mid' }, h('span', null, fmtTime(game.elapsed)))),
+      toast && h('div', { className: 'toast', role: 'status' }, toast),
+      game.won && h(Win, { game, stats, records, onNew: (lv) => { if (lv) start(lv); else { setGame(null); setHistory([]); setScreen('menu'); } } }),
+    );
+  }
+
+  function mount(data) {
+    try { const k = localStorage.getItem(SKIN_KEY); document.documentElement.setAttribute('data-skin', SKINS[k] ? k : 'classic'); } catch (e) { document.documentElement.setAttribute('data-skin', 'classic'); }
+    const saved = (data && data.game) ? data : (load() || {});
+    ReactDOM.createRoot(document.getElementById('root')).render(h(App, { boot: saved }));
+  }
+  const hot = window.claude && window.claude.hot;
+  if (hot && hot.ready) hot.ready(mount); else mount((hot && hot.data) || {});
+})();
+</script>
+
+<script>
+  // Offline support: register the service worker (skipped on file:// where it can't run).
+  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(() => { /* offline install unavailable */ });
+    });
+  }
+</script>
+</body>
+</html>
