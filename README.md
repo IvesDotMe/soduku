@@ -18,6 +18,10 @@ layout language as the Spider Solitaire app (`../spider-solitaire`); the two sha
 Same as Spider: host over HTTPS (GitHub Pages: Settings → Pages → deploy `main` from `/ (root)`), open the
 URL in Safari, play once so the cache fills, Share → Add to Home Screen.
 
+## Themes
+
+Shared with Spider: Classic, Walnut, Walnut Deco, Aurora, Felt, Éditorial, Éditorial noir, iPS.
+
 ## Game notes
 
 - Levels by number of givens: Flash 52, Easy 42, Medium 34, Hard 28, Expert 24. Every puzzle is generated
