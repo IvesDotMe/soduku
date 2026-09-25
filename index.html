@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <title>Sudoku</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Nunito+Sans:wght@400;600;700&family=Playfair+Display:wght@500;700&family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@400;500;600;700&family=Alfa+Slab+One&family=Arvo:wght@400;700&family=Oswald:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Nunito+Sans:wght@400;600;700&family=Playfair+Display:wght@500;700&family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@400;500;600;700&family=Alfa+Slab+One&family=Arvo:wght@400;700&family=Oswald:wght@600;700&family=Cinzel:wght@600;700;900&family=Josefin+Sans:wght@400;600;700&display=swap">
 <style>
   :root {
     --felt: #1a4536;
@@ -412,6 +412,77 @@
   /* iPS: geometric ranks, dot-style stats */
   :root[data-skin="ips"] .brand h1 { font-weight: 600; letter-spacing: -0.01em; }
   :root[data-skin="ips"] .stats span::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--brass); margin-right: 7px; vertical-align: 1px; }
+  /* ---------- Walnut: dark wood table, cream beveled paper, gold inlay ---------- */
+  :root:is([data-skin="walnut"],[data-skin="deco"]) {
+    --felt: #4a2c1c;
+    --felt-deep: #2c1810;
+    --felt-line: rgba(230, 200, 140, 0.35);
+    --felt-ink: #f4e7cf;
+    --felt-ink-dim: rgba(244, 231, 207, 0.72);
+    --card: #f6efdf;
+    --card-edge: #b99a6a;
+    --card-shadow: rgba(20, 8, 2, 0.55);
+    --back: #6b1f2a;
+    --back-2: #4a1119;
+    --back-line: rgba(232, 197, 120, 0.55);
+    --back-edge: #2e0a10;
+    --red: #9b2331;
+    --black: #2a1d14;
+    --brass: #d9b464;
+    --brass-hover: #e8c87e;
+    --brass-soft: rgba(217, 180, 100, 0.35);
+    --on-brass: #2c1810;
+    --red-soft: #e07a86;
+    --mint: #e8d5a3;
+    --mint-soft: rgba(232, 213, 163, 0.35);
+    --ui-font: "Nunito Sans", "Segoe UI", system-ui, sans-serif;
+    --display-font: "Playfair Display", "Iowan Old Style", Georgia, serif;
+    --rank-font: "Playfair Display", "Iowan Old Style", Georgia, serif;
+    --body-bg:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.9' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.16 0 0 0 0 0.09 0 0 0 0 0.05 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='0.9'/%3E%3C/svg%3E"),
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.10) 0 3px, transparent 3px 11px, rgba(255,220,160,0.05) 11px 13px, transparent 13px 29px),
+      linear-gradient(180deg, #5a3620 0%, #3d2214 55%, #2c1810 100%);
+    --btn-bg: linear-gradient(180deg, #6b432a, #45291a);
+    --btn-bg-hover: linear-gradient(180deg, #7a4f32, #52311f);
+    --scrim: rgba(20, 10, 4, 0.72);
+    --toast-bg: #2c1810;
+    --toast-ink: #f4e7cf;
+    --panel-bg: linear-gradient(180deg, #4a2c1c, #2e1a10);
+    --r-card: calc(var(--cw) * 0.07);
+    --r-btn: 8px;
+    --r-panel: 14px;
+    --ui-size: 14px;
+  }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .btn, :root:is([data-skin="walnut"],[data-skin="deco"]) .skin select, :root:is([data-skin="walnut"],[data-skin="deco"]) .choice, :root:is([data-skin="walnut"],[data-skin="deco"]) .key, :root:is([data-skin="walnut"],[data-skin="deco"]) .tool, :root:is([data-skin="walnut"],[data-skin="deco"]) .dock-btn {
+    border: 1px solid #23120a;
+    box-shadow: inset 0 1px 0 rgba(255, 225, 170, 0.35), inset 0 -1px 0 rgba(0,0,0,0.35), 0 2px 4px rgba(0,0,0,0.45);
+    text-shadow: 0 1px 0 rgba(0,0,0,0.45);
+  }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .btn.primary { background: linear-gradient(180deg, #e8c87e, #c9a35e); border-color: #7a5a22; text-shadow: 0 1px 0 rgba(255,255,255,0.35); }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .brand h1 { font-weight: 700; color: var(--brass); text-shadow: 0 1px 0 rgba(0,0,0,0.5); letter-spacing: 0.01em; }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .brand .diff, :root:is([data-skin="walnut"],[data-skin="deco"]) .eyebrow { color: var(--brass); }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .stats b { color: var(--brass); }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .panel { border: 1px solid #7a5a22; box-shadow: inset 0 0 0 1px rgba(217,180,100,0.35), 0 30px 60px rgba(0,0,0,0.6); }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .panel h2 { color: var(--brass); }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .choice { background: linear-gradient(180deg, #6b432a, #45291a); }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .choice:hover { border-color: var(--brass); }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .stats-table td, :root:is([data-skin="walnut"],[data-skin="deco"]) .stats-table th { border-color: rgba(217,180,100,0.3); }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .toast { border-color: #7a5a22; }
+  /* spider cards: paper with bevel, gold-on-burgundy backs */
+  /* ---------- Walnut Deco: same table, engraved Cinzel numerals ---------- */
+  :root[data-skin="deco"] {
+    --ui-font: "Josefin Sans", "Futura", "Century Gothic", sans-serif;
+    --display-font: "Cinzel", "Trajan Pro", "Times New Roman", serif;
+    --rank-font: "Cinzel", "Trajan Pro", "Times New Roman", serif;
+    --ui-size: 14.5px;
+  }
+  :root[data-skin="deco"] .brand h1 { font-weight: 900; letter-spacing: 0.06em; text-transform: uppercase; font-size: 20px; }
+  :root[data-skin="deco"] .brand .diff, :root[data-skin="deco"] .eyebrow, :root[data-skin="deco"] .skin-label { letter-spacing: 0.22em; }
+  :root[data-skin="deco"] .btn, :root[data-skin="deco"] .skin select, :root[data-skin="deco"] .tool span, :root[data-skin="deco"] .dock-btn { font-family: var(--ui-font); text-transform: uppercase; letter-spacing: 0.14em; font-weight: 600; }
+  :root[data-skin="deco"] .panel h2 { font-weight: 700; letter-spacing: 0.04em; }
+  :root[data-skin="deco"] .stats b, :root[data-skin="deco"] .dock-mid b, :root[data-skin="deco"] .win-stats b { font-family: var(--display-font); font-weight: 700; }
+  :root[data-skin="deco"] .cell { font-weight: 700; }
+  :root[data-skin="deco"] .key { font-weight: 700; }
   /* ---------- theme picker ---------- */
   .skin { display: flex; align-items: center; gap: 6px; }
   .skin-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--felt-ink-dim); font-weight: 600; }
@@ -535,9 +606,28 @@
   :root[data-skin="paper"] { --grid-ink: #211d17; --entered: #8a6d3f; --note-ink: #7a7160; --peer-bg: #f1ece1; --same-bg: #ece3d0; --sel-bg: #e3d6b8; --wrong-bg: #f0d6d0; }
   :root[data-skin="noir"] { --grid-ink: #5a4c34; --entered: #c9a35e; --note-ink: #a3987f; --peer-bg: #241f18; --same-bg: #2f2819; --sel-bg: #3d3320; --wrong-bg: #3a1f1b; --black: #ece4d4; }
   :root[data-skin="ips"] { --grid-ink: #18181b; --entered: #0072c6; --note-ink: #52525b; --peer-bg: #eaeaec; --same-bg: #dbe9f6; --sel-bg: #bfdcf5; --wrong-bg: #f8d7d7; }
-  :root[data-skin="classic"] { --grid-ink: #1b1b1b; --entered: #1b7ac2; --note-ink: #55606a; --peer-bg: #ecefe9; --same-bg: #d7ecf5; --sel-bg: #ffe9a3; --wrong-bg: #f9d3d0; }
+  :root[data-skin="classic"] { --grid-ink: #1b1b1b; --entered: #146356; --note-ink: #55606a; --peer-bg: #ecefe9; --same-bg: #d7ecf5; --sel-bg: #ffe9a3; --wrong-bg: #f9d3d0; }
   :root[data-skin="classic"] .key, :root[data-skin="classic"] .tool { background: rgba(255,255,255,0.14); border-color: transparent; }
   :root[data-skin="classic"] .tool span { font-family: var(--display-font); font-weight: 400; text-transform: lowercase; letter-spacing: 0.02em; font-size: 13px; }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) { --grid-ink: #23120a; --entered: #8b2331; --note-ink: #7a6a55; --peer-bg: #ece1c9; --same-bg: #f3dfa6; --sel-bg: #f7d47a; --wrong-bg: #f2cfc9; }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .board {
+    border: 6px solid #3a2114;
+    box-shadow: inset 0 0 0 2px var(--brass), 0 0 0 1px #1a0d06, 0 0 0 4px #5a3620, 0 0 0 5px rgba(217,180,100,0.5), 0 16px 34px rgba(0,0,0,0.6);
+    border-radius: 6px;
+  }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .cell {
+    background: linear-gradient(180deg, #f8f1e1, #efe4cc);
+    box-shadow: inset 1px 1px 0 rgba(255,255,255,0.85), inset -1px -1px 0 rgba(120,90,40,0.22);
+  }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .cell.peer { background: linear-gradient(180deg, #efe4cd, #e5d7b8); }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .cell.same { background: linear-gradient(180deg, #f6e3ad, #edd48f); }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .cell.selected { background: linear-gradient(180deg, #f9d97e, #f0c65c); box-shadow: inset 0 0 0 2px #b8892e, inset 0 0 12px rgba(184,137,46,0.35); }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .cell.wrong { background: linear-gradient(180deg, #f5d6d0, #ebc3bc); }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .cell.given { color: #2a1d14; text-shadow: 0 1px 0 rgba(255,255,255,0.6); }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .cell.entered { color: var(--entered); text-shadow: 0 1px 0 rgba(255,255,255,0.6); }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .key { color: var(--brass); }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .key.active, :root:is([data-skin="walnut"],[data-skin="deco"]) .tool.on { background: linear-gradient(180deg, #e8c87e, #c9a35e); color: #2c1810; text-shadow: none; }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .key small { color: var(--felt-ink-dim); }
   .choice .lvl { font-size: 22px; line-height: 1; margin-bottom: 8px; font-family: var(--rank-font); font-weight: 700; color: var(--brass); }
   .choices.five { grid-template-columns: repeat(5, 1fr); }
   .dock { display: none; }
@@ -589,7 +679,7 @@
   const SAVE_KEY = 'sudoku-save-v1';
   const SKIN_KEY = 'spider-solitaire-skin';   // shared with Spider so both games wear the same theme
   const STATS_KEY = 'sudoku-stats-v1';
-  const SKINS = { classic: 'Classic', felt: 'Felt', paper: 'Éditorial', noir: 'Éditorial noir', ips: 'iPS' };
+  const SKINS = { classic: 'Classic', walnut: 'Walnut', deco: 'Walnut Deco', felt: 'Felt', paper: 'Éditorial', noir: 'Éditorial noir', ips: 'iPS' };
 
   // Difficulty = how many givens stay on the board (fewer givens → harder). All puzzles have one solution.
   const LEVELS = {
@@ -808,6 +898,7 @@
     const [toast, setToast] = useState(null);
     const [busy, setBusy] = useState(false);
     const [hinted, setHinted] = useState(null);
+    const [hlDigit, setHlDigit] = useState(0);            // digit lit up from the pad when no cell is being filled
     const [solvedUnits, setSolvedUnits] = useState([]);   // cells to pop when a row/col/box completes
     const [cellSize, setCellSize] = useState(48);
     const [skin, setSkin] = useState(() => { try { const k = localStorage.getItem(SKIN_KEY); return SKINS[k] ? k : 'classic'; } catch (e) { return 'classic'; } });
@@ -975,7 +1066,7 @@
 
     const counts = Array(10).fill(0);
     game.cells.forEach((v, i) => { if (v && v === game.solution[i]) counts[v]++; });
-    const selVal = sel != null ? game.cells[sel] : 0;
+    const selVal = hlDigit || (sel != null ? game.cells[sel] : 0);
     const selCorrect = sel != null && selVal && selVal === game.solution[sel];
 
     return h('div', { className: 'app' },
@@ -1002,14 +1093,15 @@
               const cls = ['cell', given ? 'given' : (v ? 'entered' : 'up'),
                 wrong ? 'wrong' : '', isSel ? 'selected' : (same ? 'same' : (inLine ? 'peer' : '')),
                 hinted === i ? 'hinted' : '', solvedUnits.includes(i) ? 'solved' : ''].join(' ');
-              return h('div', { key: i, className: cls, role: 'gridcell', 'data-i': i, onPointerDown: (e) => { e.preventDefault(); setSel(i); } },
+              return h('div', { key: i, className: cls, role: 'gridcell', 'data-i': i, onPointerDown: (e) => { e.preventDefault(); setSel(i); setHlDigit(0); } },
                 v ? String(v) : (game.notes[i].length ? h('div', { className: 'notes' },
                   Array.from({ length: 9 }, (_, d) => h('span', { key: d, className: selVal === d + 1 && game.notes[i].includes(d + 1) ? 'hl' : '' }, game.notes[i].includes(d + 1) ? d + 1 : ''))) : null));
             })))),
         h('div', { className: 'pad' },
           Array.from({ length: 9 }, (_, d) => {
             const n = d + 1, left = 9 - counts[n];
-            return h('button', { key: n, className: 'key' + (left === 0 ? ' done' : '') + (selVal === n && selCorrect ? ' active' : ''), id: 'key-' + n, disabled: left === 0, onClick: () => enter(n) },
+            const canFill = sel != null && !game.puzzle[sel] && (notesMode || game.cells[sel] !== game.solution[sel]);
+            return h('button', { key: n, className: 'key' + (left === 0 ? ' done' : '') + ((selVal === n && selCorrect) || hlDigit === n ? ' active' : ''), id: 'key-' + n, disabled: left === 0 && hlDigit !== n, onClick: () => { if (canFill) enter(n); else setHlDigit(d => (d === n ? 0 : n)); } },
               n, h('small', null, left === 0 ? '✓' : left));
           })),
         h('div', { className: 'tools' },

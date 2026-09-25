@@ -31,5 +31,3 @@ URL in Safari, play once so the cache fills, Share → Add to Home Screen.
   (2 × multiplier per second under 30 minutes).
 - Storage (`localStorage`): `sudoku-save-v1` (game + undo history), `sudoku-stats-v1` (played/won per
   level, best score/time, streaks), `spider-solitaire-skin` (theme, shared with Spider).
-
-Published (online-only) copy: https://claude.ai/artifact/TgPdW2ZmX6FjiNF6jfFYNW
