@@ -1397,7 +1397,7 @@
     const [hlDigit, setHlDigit] = useState(0);            // digit lit up from the pad when no cell is being filled
     const [solvedUnits, setSolvedUnits] = useState([]);   // cells to pop when a row/col/box completes
     const [cellSize, setCellSize] = useState(48);
-    const [skin, setSkin] = useState(() => { try { const k = localStorage.getItem(SKIN_KEY); return SKINS[k] ? k : 'classic'; } catch (e) { return 'classic'; } });
+    const [skin, setSkin] = useState(() => { try { const k = localStorage.getItem(SKIN_KEY); return SKINS[k] ? k : 'neon'; } catch (e) { return 'neon'; } });
     const [stats, setStats] = useState(loadStats);
     const [records, setRecords] = useState([]);
     const stageRef = useRef(null);
@@ -1636,7 +1636,7 @@
   }
 
   function mount(data) {
-    try { const k = localStorage.getItem(SKIN_KEY); document.documentElement.setAttribute('data-skin', SKINS[k] ? k : 'classic'); } catch (e) { document.documentElement.setAttribute('data-skin', 'classic'); }
+    try { const k = localStorage.getItem(SKIN_KEY); document.documentElement.setAttribute('data-skin', SKINS[k] ? k : 'neon'); } catch (e) { document.documentElement.setAttribute('data-skin', 'neon'); }
     const saved = (data && data.game) ? data : (load() || {});
     ReactDOM.createRoot(document.getElementById('root')).render(h(App, { boot: saved }));
   }
