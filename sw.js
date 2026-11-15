@@ -1,6 +1,6 @@
-// Sudoku service worker — build ed249a73
+// Sudoku service worker — build ed249a74
 // Precaches the app shell so the game opens with no network; fonts are cached as they load.
-const VERSION = 'sudoku-ed249a73';
+const VERSION = 'sudoku-ed249a74';
 const SHELL = [
   './',
   './index.html',
